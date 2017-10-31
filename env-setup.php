@@ -34,9 +34,6 @@ maybe_define( 'DOMAIN', $url_parts['host'] );
 maybe_define( 'PROTOCOL', isset($url_parts['scheme']) ? "{$url_parts['scheme']}://" : 'http://' );
 maybe_define( 'COOKIE_PATH', rtrim(!empty($url_parts['path']) ? $url_parts['path'] : '/', '/') . '/' );
 
-// auth cookie name
-maybe_define( 'AUTH_COOKIE', substr(hash('sha256', SITE_URL . App\Config::SALT), 0, 44) );
-
 // setup app autoloader
 spl_autoload_register(function($class) {
     if ( 0 === strpos($class, 'App\\') ) {
@@ -50,3 +47,6 @@ spl_autoload_register(function($class) {
         }
     }
 });
+
+// auth cookie name
+maybe_define( 'AUTH_COOKIE', substr(hash('sha256', SITE_URL . App\Config::SALT), 0, 44) );
