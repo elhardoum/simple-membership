@@ -1,7 +1,5 @@
 <?php
 
-use App\DB, App\View, App\Routes, App\Config;
-
 // first things first
 define ( 'ROOT_DIR', __DIR__ );
 
@@ -15,11 +13,11 @@ require __DIR__ . '/dep-setup.php';
 
 // this could be removed if you want to save tiny bits of memory
 try {
-    DB::i();
+    App\DB::i();
 } catch ( PDOException $e ) {
-    return View::Err('<h1>Database Error</h1><p>' . (
+    return App\View::Err('<h1>Database Error</h1><p>' . (
         DEBUG_MODE ? $e->getMessage() : 'Could not establish a database connection.'
     ) . '</p>', 500);
 }
 
-return Routes::dispatch();
+return App\Routes::dispatch();
