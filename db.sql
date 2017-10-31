@@ -1,6 +1,6 @@
-create database simple_membership;
+create database if not exists `simple_membership`;
 
-create table if not exists simple_membership.users (
+create table if not exists `simple_membership`.`users` (
     `id` bigint(20) not null auto_increment,
     `email` varchar(100) not null,
     `name` varchar(250),
@@ -9,7 +9,7 @@ create table if not exists simple_membership.users (
     primary key(id)
 );
 
-create table if not exists simple_membership.meta (
+create table if not exists `simple_membership`.`meta` (
     `object_id` bigint(20) default 0,
     `meta_key` varchar(255) not null,
     `meta_value` LONGTEXT not null,
