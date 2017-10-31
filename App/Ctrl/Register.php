@@ -14,10 +14,8 @@ class Register extends Ctrl
     {
         self::check();
 
-        $err = (new Errors)->setGroup('register')->import();
-
         View::file('register', array(
-            'err' => $err,
+            'err' => (new Errors)->setGroup('register')->import(),
         ));
     }
 
