@@ -1,8 +1,15 @@
 <?php
 
-use App\Config;
-
+// prevent direct access
 defined ( 'ROOT_DIR' ) || exit('Direct access not allowed.');
+
+// time constants
+defined ( 'MINUTE_IN_SECONDS' )     || define ( 'MINUTE_IN_SECONDS', 60);
+defined ( 'HOUR_IN_SECONDS' )       || define ( 'HOUR_IN_SECONDS', 60 * MINUTE_IN_SECONDS);
+defined ( 'DAY_IN_SECONDS' )        || define ( 'DAY_IN_SECONDS', 24 * HOUR_IN_SECONDS);
+defined ( 'WEEK_IN_SECONDS' )       || define ( 'WEEK_IN_SECONDS', 7 * DAY_IN_SECONDS);
+defined ( 'MONTH_IN_SECONDS' )      || define ( 'MONTH_IN_SECONDS', 30 * DAY_IN_SECONDS);
+defined ( 'YEAR_IN_SECONDS' )       || define ( 'YEAR_IN_SECONDS', 365 * DAY_IN_SECONDS);
 
 if ( DEBUG_MODE ) {
     error_reporting(E_ALL);
@@ -35,4 +42,4 @@ spl_autoload_register(function($class) {
     }
 });
 
-define ( 'AUTH_COOKIE', substr(hash('sha256', SITE_URL . Config::SALT), 0, 44) );
+define ( 'AUTH_COOKIE', substr(hash('sha256', SITE_URL . App\Config::SALT), 0, 44) );

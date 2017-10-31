@@ -55,14 +55,4 @@ final class Config
     const MAIL_FROM_NAME = Config::SITE_NAME;
     const MAIL_REPLY_TO_EMAIL = Config::MAIL_FROM_EMAIL;
     const MAIL_REPLY_TO_NAME = Config::SITE_NAME;
-    
-    /**
-      * Leave these untouched
-      */
-    const MINUTE_IN_SECONDS = 60;
-    const HOUR_IN_SECONDS = 60 * Config::MINUTE_IN_SECONDS;
-    const DAY_IN_SECONDS = 24 * Config::HOUR_IN_SECONDS;
-    const WEEK_IN_SECONDS = 7 * Config::DAY_IN_SECONDS;
-    const MONTH_IN_SECONDS = 30 * Config::DAY_IN_SECONDS;
-    const YEAR_IN_SECONDS = 365 * Config::DAY_IN_SECONDS;
 }

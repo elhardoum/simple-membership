@@ -38,7 +38,7 @@ class Cookie
         setcookie(
             $name,
             ' ',
-            time()-Config::YEAR_IN_SECONDS,
+            time()-YEAR_IN_SECONDS,
             $path,
             DOMAIN,
             (!$httponly ? 'https://' == PROTOCOL : null),

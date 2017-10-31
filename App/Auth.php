@@ -40,7 +40,7 @@ class Auth
 
         $tokens = self::getUserTokens($user_id);
         $token = self::token(36);
-        $tokens[ $token ] = time() + ($remeber ? Config::WEEK_IN_SECONDS : Config::DAY_IN_SECONDS)*2;
+        $tokens[ $token ] = time() + ($remeber ? WEEK_IN_SECONDS : DAY_IN_SECONDS)*2;
 
         if ( update_user_meta( $user_id, 'tokens', $tokens ) ) {
             Cookie::set( AUTH_COOKIE, "{$user_id}:{$token}", $tokens[$token]-time(), null, true );
