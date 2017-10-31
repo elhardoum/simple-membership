@@ -102,9 +102,9 @@ function validate_redirect($location, $default = '') {
     $allowed_hosts = array($wpp['host']);
  
     if ( preg_match('/^www\./si', $allowed_hosts[0]) ) {
-        $allowed_hosts[] = preg_replace('/^www\./si', '', DOMAIN);
+        $allowed_hosts[] = preg_replace('/^www\./si', '', cfg('DOMAIN'));
     } else {
-        $allowed_hosts[] = 'www.' . DOMAIN;
+        $allowed_hosts[] = 'www.' . cfg('DOMAIN');
     }
 
     if ( isset($lp['host']) && ( !in_array($lp['host'], $allowed_hosts) && $lp['host'] != strtolower($wpp['host'])) )

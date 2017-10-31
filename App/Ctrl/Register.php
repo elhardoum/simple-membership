@@ -25,20 +25,14 @@ class Register extends Ctrl
     {
         self::check();
 
-        if ( !isset($_POST['email']) )
-            $_POST['email'] = null;
-        if ( !isset($_POST['name']) )
-            $_POST['name'] = null;
-        if ( !isset($_POST['pass']) )
-            $_POST['pass'] = null;
-        if ( !isset($_POST['pass_conf']) )
-            $_POST['pass_conf'] = null;
-
-        $_POST = array_map('trim', $_POST);
+        $_POST = array_combine(
+            array( 'name', 'email', 'pass', 'pass_conf', 'nonce' ),
+            array_map('trim', array_map('old', array( 'name', 'email', 'pass', 'pass_conf', 'nonce' )))
+        );
 
         $err = (new Errors)->setGroup('register');
 
-        if ( !Nonce::verify( old('nonce'), 'register' ) ) {
+        if ( !Nonce::verify( $_POST['nonce'], 'register' ) ) {
             return self::redirectHere(array(
                 'data' => array( 'email' => $_POST['email'], 'name' => $_POST['name'] ),
                 'errors' => bad_auth($err),

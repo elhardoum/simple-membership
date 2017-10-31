@@ -7,7 +7,6 @@ use App\View;
 class Err extends Ctrl
 {
     static $pageTitle = 'Error Occured';
-    static $errorsGroup = 'err';
     
     public function __construct($html, $status=null, $title=null)
     {
