@@ -17,7 +17,6 @@ class Profile extends Ctrl
         return View::file('profile', array(
             'user' => Auth::getCurrentUser(),
             'err' => $err,
-            'logout' => Logout::url()
         ));
     }
 }
