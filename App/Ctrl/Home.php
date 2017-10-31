@@ -14,9 +14,6 @@ class Home extends Ctrl
         View::file('home', array(
             'err' => (new Errors)->setGroup('home')->import(),
             'loggedIn' => Auth::loggedIn(),
-            'login' => Login::url(),
-            'register' => Register::url(),
-            'profile' => Profile::url(),
         ));
     }
 }

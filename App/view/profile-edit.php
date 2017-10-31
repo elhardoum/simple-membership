@@ -27,7 +27,7 @@
                 <input type="submit" value="Update Profile" />
             </label>
             <label>
-                <a href="<?php echo url('/profile'); ?>" class="button secondary">cancel</a>
+                <a href="<?php echo App\Ctrl\Profile::url(); ?>" class="button secondary">cancel</a>
             </label>
             <input type="hidden" name="nonce" value="<?php echo nonce()->create('edit-profile'); ?>" />
         </div>

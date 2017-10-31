@@ -33,5 +33,5 @@
         </div>
     </form>
 
-    <p style="color:#ddd">Don't have an account? Click <a href="<?php echo $register; ?>">here</a> to register.</p>
+    <p style="color:#ddd">Don't have an account? Click <a href="<?php echo App\Ctrl\Register::url(); ?>">here</a> to register.</p>
 </div>

@@ -44,5 +44,5 @@
         </div>
     </form>
 
-    <p style="color:#ddd">Have an account? Click <a href="<?php echo $login; ?>">here</a> to login.</p>
+    <p style="color:#ddd">Have an account? Click <a href="<?php echo App\Ctrl\Login::url(); ?>">here</a> to login.</p>
 </div>

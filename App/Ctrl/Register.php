@@ -19,7 +19,6 @@ class Register extends Ctrl
 
         View::file('register', array(
             'err' => $err,
-            'login' => Login::url(),
         ));
     }
 
