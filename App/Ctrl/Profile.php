@@ -12,7 +12,7 @@ class Profile extends Ctrl
     public function get()
     {
         $err = (new Errors)->setGroup('profile');
-        Auth::protect($err);
+        Auth::protect($err, self::url(null, true));
 
         return View::file('profile', array(
             'user' => Auth::getCurrentUser(),

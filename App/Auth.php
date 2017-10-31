@@ -160,7 +160,7 @@ class Auth
         return (bool) self::getCurrentUser();
     }
 
-    static function protect($err=null)
+    static function protect($err=null, $redirect_to=null)
     {
         if ( !Auth::loggedIn() ) {
             if ( !$err || ! $err instanceOf Errors ) {
@@ -169,7 +169,10 @@ class Auth
                 $err->renameGroup('login');
             }
 
-            return View::redirect( Ctrl\Login::url(), array( 'errors' => $err->addError('You must login first', 'error') ) );
+            return Ctrl\Login::redirectHere(
+                array( 'errors' => $err->addError('You must login first', 'error') ),
+                $redirect_to ? '?redirect_to=' . urlencode($redirect_to) : ''
+            );
         }
     }
 

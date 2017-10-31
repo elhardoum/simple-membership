@@ -77,6 +77,7 @@ class View
         ), true);
 
         echo ( self::$content ), PHP_EOL;
+        DB::i(true);
     }
 
     public static function instance()

@@ -9,7 +9,6 @@ class Register extends Ctrl
 {
     static $route = '/register';
     static $pageTitle = 'Register';
-    protected static $errorsGroup = 'register';
 
     public function get()
     {
@@ -40,7 +39,7 @@ class Register extends Ctrl
         $err = (new Errors)->setGroup('register');
 
         if ( !Nonce::verify( old('nonce'), 'register' ) ) {
-            return redirect(View::getRouteUri(), array(
+            return self::redirectHere(array(
                 'data' => array( 'email' => $_POST['email'], 'name' => $_POST['name'] ),
                 'errors' => bad_auth($err),
             ));
@@ -81,7 +80,7 @@ class Register extends Ctrl
 
                     $err->renameGroup('login')->addError('Your account was successfully created! Login below.', 'success');
 
-                    return redirect(Login::url(), array(
+                    return Login::redirectHere(array(
                         'data' => array( 'email' => $_POST['email'] ),
                         'errors' => $err,
                     ));
@@ -91,7 +90,7 @@ class Register extends Ctrl
                 break;
         }
 
-        return redirect(View::getRouteUri(), array(
+        return self::redirectHere(array(
             'data' => array( 'email' => $_POST['email'], 'name' => $_POST['name'] ),
             'errors' => $err,
         ));
@@ -100,7 +99,7 @@ class Register extends Ctrl
     static function check()
     {
         if ( Auth::loggedIn() ) {
-            return View::redirect ( Profile::url() );
+            return Profile::redirectHere();
         }
     }
 }

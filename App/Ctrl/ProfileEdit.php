@@ -14,7 +14,7 @@ class ProfileEdit extends Ctrl
     public function get()
     {
         $err = (new Errors)->setGroup('profile')->import();
-        Auth::protect($err);
+        Auth::protect($err, self::url(null, true));
 
         if ( null === old('name') ) {
             set_old( 'name', self::user()->get()->name );
@@ -32,7 +32,7 @@ class ProfileEdit extends Ctrl
     public function post()
     {
         $err = (new Errors)->setGroup('profile');
-        Auth::protect($err);
+        Auth::protect($err, self::url(null, true));
 
         $data = array_combine(array('name','email','nonce'), array_map('old', array('name','email','nonce')));
 
@@ -44,7 +44,7 @@ class ProfileEdit extends Ctrl
             $err->removeError(null,null,'empty_fields');
         }
 
-        return redirect(View::getRouteUri(), array(
+        return self::redirectHere(array(
             'data' => $data,
             'errors' => $err,
         ));

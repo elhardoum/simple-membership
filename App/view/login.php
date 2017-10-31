@@ -30,6 +30,9 @@
                 <span>Remember Me</span>
             </label>
             <input type="hidden" name="nonce" value="<?php echo nonce()->create('login'); ?>" />
+            <?php if ( $to = old( 'redirect_to' ) ) : ?>
+                <input type="hidden" name="redirect_to" value="<?php echo esc_attr($to); ?>" />
+            <?php endif; ?>
         </div>
     </form>
 

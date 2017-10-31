@@ -9,7 +9,6 @@ class Login extends Ctrl
 {
     static $route = '/login';
     static $pageTitle = 'Login';
-    protected static $errorsGroup = 'login';
 
     public function get()
     {
@@ -26,17 +25,15 @@ class Login extends Ctrl
     {
         self::check();
 
-        if ( !isset($_POST['email']) )
-            $_POST['email'] = null;
-        if ( !isset($_POST['pass']) )
-            $_POST['pass'] = null;
-        if ( !isset($_POST['remember']) )
-            $_POST['remember'] = null;
+        $_POST = array_combine(
+            array( 'email', 'pass', 'remember', 'redirect_to', 'nonce' ),
+            array_map('old', array( 'email', 'pass', 'remember', 'redirect_to', 'nonce' ))
+        );
 
         $err = (new Errors)->setGroup('login');
 
-        if ( !Nonce::verify( old('nonce'), 'login' ) ) {
-            return redirect(View::getRouteUri(), array(
+        if ( !Nonce::verify( $_POST['nonce'], 'login' ) ) {
+            return self::redirectHere(array(
                 'data' => array( 'email' => $_POST['email'], 'remember' => $_POST['remember'] ),
                 'errors' => bad_auth($err),
             ));
@@ -72,8 +69,8 @@ class Login extends Ctrl
                 break;
         }
 
-        return redirect(View::getRouteUri(), array(
-            'data' => array( 'email' => $_POST['email'], 'remember' => $_POST['remember'] ),
+        return self::redirectHere(array(
+            'data' => $_POST,
             'errors' => $err,
         ));
     }
@@ -81,7 +78,11 @@ class Login extends Ctrl
     static function check()
     {
         if ( Auth::loggedIn() ) {
-            return View::redirect ( Profile::url() );
+            if ( $to = old( 'redirect_to' ) ) {
+                return View::redirect($to, array( 'safe' => true ));
+            } else {
+                return Profile::redirectHere();
+            }
         }
     }
 }

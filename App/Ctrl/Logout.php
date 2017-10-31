@@ -9,7 +9,7 @@ class Logout extends Ctrl
 {
     static $route = '/logout';
     static $pageTitle = 'Logout';
-    
+
     public function request()
     {
         if ( !isset($_REQUEST['nonce']) ) {
@@ -19,9 +19,9 @@ class Logout extends Ctrl
         $user = Auth::getCurrentUser();
 
         if ( !$user ) {
-            return View::redirect(Home::url(), [
+            return Home::redirectHere(array(
                 'errors' => (new Errors)->setGroup('home')->addError('You are already logged out.', 'error')
-            ]);
+            ));
         }
 
         if ( Nonce::verify($_REQUEST['nonce'], 'logout') ) {
@@ -35,6 +35,7 @@ class Logout extends Ctrl
                         . ')?'
                         . '&nbsp;&nbsp;<input type="submit" name="conf" value="Logout" />'
                         . '<input type="hidden" name="nonce" value="' . esc_attr($_REQUEST['nonce']) . '" />'
+                        . '<input type="hidden" name="redirect_to" value="' . esc_attr(old('redirect_to')) . '" />'
                         . '</form></label>');
                 } else if ( isset($_REQUEST['all']) ) {
                     Auth::logoutAll();
@@ -42,7 +43,11 @@ class Logout extends Ctrl
             }
 
             if ( Auth::logout() ) {
-                return View::redirect( Home::url() );
+                if ( $to = old( 'redirect_to' ) ) {
+                    return View::redirect($to, array( 'safe' => true ));
+                } else {
+                    return Home::redirectHere();
+                }
             }
         }
 
