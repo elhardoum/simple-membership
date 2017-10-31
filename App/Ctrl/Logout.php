@@ -10,7 +10,7 @@ class Logout extends Ctrl
     static $route = '/logout';
     static $pageTitle = 'Logout';
     
-    public function get()
+    public function request()
     {
         if ( !isset($_REQUEST['nonce']) ) {
             return Routes::Err404();
