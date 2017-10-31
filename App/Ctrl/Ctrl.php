@@ -34,16 +34,16 @@ abstract class Ctrl
 
         if ( isset($args['errors']) && $args['errors'] instanceOf Errors ) {
             if ( method_exists($args['errors'], 'renameGroup') ) {
-                $args['errors']->renameGroup( self::getErrorsGroup() );
+                $args['errors']->renameGroup( self::getErrorsGroup(1) );
             }
         }
 
         View::redirect(View::url(static::$route . $after, true), $args);
     }
 
-    private static function getErrorsGroup()
+    private static function getErrorsGroup($ignore_state=null)
     {
-        if ( !static::$errorsGroup ) {
+        if ( !static::$errorsGroup || $ignore_state ) {
             $class = basename( str_replace( '\\', '/', get_called_class() ) );
             $c=0;
             static::$errorsGroup = preg_replace_callback('/[A-Z]/s', function($m) use (&$c){
@@ -58,5 +58,10 @@ abstract class Ctrl
         }
 
         return static::$errorsGroup;
+    }
+
+    static function getErrors()
+    {
+        return (new Errors)->setGroup( self::getErrorsGroup() )->import();
     }
 }

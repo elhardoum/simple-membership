@@ -15,7 +15,7 @@ class Register extends Ctrl
         self::check();
 
         View::file('register', array(
-            'err' => (new Errors)->setGroup('register')->import(),
+            'err' => self::getErrors(),
         ));
     }
 
@@ -28,7 +28,7 @@ class Register extends Ctrl
             array_map('trim', array_map('old', array( 'name', 'email', 'pass', 'pass_conf', 'nonce' )))
         );
 
-        $err = (new Errors)->setGroup('register');
+        $err = self::getErrors();
 
         if ( !Nonce::verify( $_POST['nonce'], 'register' ) ) {
             return self::redirectHere(array(

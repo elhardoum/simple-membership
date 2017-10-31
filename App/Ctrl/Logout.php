@@ -20,7 +20,7 @@ class Logout extends Ctrl
 
         if ( !$user ) {
             return Home::redirectHere(array(
-                'errors' => (new Errors)->setGroup('home')->addError('You are already logged out.', 'error')
+                'errors' => self::getErrors()->addError('You are already logged out.', 'error')
             ));
         }
 

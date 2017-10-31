@@ -11,7 +11,7 @@ class Profile extends Ctrl
     
     public function get()
     {
-        $err = (new Errors)->setGroup('profile');
+        $err = self::getErrors();
         Auth::protect($err, self::url(null, true));
 
         return View::file('profile', array(

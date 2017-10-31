@@ -13,7 +13,7 @@ class ProfileEdit extends Ctrl
     
     public function get()
     {
-        $err = (new Errors)->setGroup('profile')->import();
+        $err = self::getErrors();
         Auth::protect($err, self::url(null, true));
 
         if ( null === old('name') ) {
@@ -31,7 +31,7 @@ class ProfileEdit extends Ctrl
 
     public function post()
     {
-        $err = (new Errors)->setGroup('profile');
+        $err = self::getErrors();
         Auth::protect($err, self::url(null, true));
 
         $data = array_combine(array('name','email','nonce'), array_map('old', array('name','email','nonce')));

@@ -13,7 +13,7 @@ class ProfileEditPassword extends Ctrl
     
     public function get()
     {
-        $err = (new Errors)->setGroup('profile')->import();
+        $err = self::getErrors();
         Auth::protect($err, self::url(null, true));
 
         return View::file('profile-edit-password', array(
@@ -23,7 +23,7 @@ class ProfileEditPassword extends Ctrl
 
     public function post()
     {
-        $err = (new Errors)->setGroup('profile');
+        $err = self::getErrors();
         Auth::protect($err, self::url(null, true));
 
         $data = array_combine(array('nonce','old_pass','pass','pass_conf'), array_map('old', array('nonce','old_pass','pass','pass_conf')));

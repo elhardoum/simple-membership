@@ -12,7 +12,7 @@ class Home extends Ctrl
     public function get()
     {
         View::file('home', array(
-            'err' => (new Errors)->setGroup('home')->import(),
+            'err' => self::getErrors(),
             'loggedIn' => Auth::loggedIn(),
         ));
     }
