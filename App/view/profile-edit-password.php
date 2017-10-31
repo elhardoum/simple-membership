@@ -1,5 +1,3 @@
-<?php parse_redirect_data(); ?>
-
 <div class="tiny-box">
     <span class="user-err"><?php print_errors($err, null, null, null, array('old_pass','pass','pass_conf')); ?></span>
     <h1 style="margin-bottom:0">Edit your Password</h1>

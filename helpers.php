@@ -2,7 +2,7 @@
 
 defined ( 'APP_DIR' ) || exit('Direct access not allowed.');
 
-use App\{Cookie,View,Errors,DB};
+use App\Cookie, App\View, App\Errors, App\DB;
 use Nonce\Nonce;
 
 function cfg($id, $default=null) {

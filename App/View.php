@@ -19,8 +19,8 @@ class View
     public static function file($file, $args=null)
     {
         ob_start();
-
         extract((array) $args);
+        parse_redirect_data();
 
         if ( preg_match( '/\.(html|php)$/', $file ) ) {
             include APP_DIR. "/view/$file";

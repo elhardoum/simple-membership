@@ -1,5 +1,3 @@
-<?php parse_redirect_data(); ?>
-
 <div class="tiny-box">
     <span class="user-err"><?php print_errors($err, null, null, null, array('email','name','pass','pass_conf')); ?></span>
     <h1 style="margin-bottom:0">Register</h1>

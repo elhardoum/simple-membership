@@ -1,5 +1,3 @@
-<?php parse_redirect_data(); ?>
-
 <div class="tiny-box">
     <span class="user-err"><?php print_errors($err, null, null, null, array('name','email')); ?></span>
     <h1 style="margin-bottom:0">Edit Profile</h1>

@@ -1,5 +1,3 @@
-<?php parse_redirect_data(); ?>
-
 <div class="tiny-box">
     <span class="user-err"><?php print_errors($err); ?></span>
     <h1 style="margin-bottom:0">Hello There!</h1>

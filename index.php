@@ -1,6 +1,6 @@
 <?php
 
-use App\{DB,View,Routes,Config};
+use App\DB, App\View, App\Routes, App\Config;
 
 // first things first
 define ( 'ROOT_DIR', __DIR__ );
