@@ -36,37 +36,6 @@ final class Config
     const SALT = 'Wxen!HEE^bPdr.rUfhdaZNLM6cz_tpi,JO$!AG>0e0&S^_AUTH_SALTe4s-nOC35_d+{D=awdfjYN1{2=RBH6';
 
     /**
-      * Membership details
-      */
-
-    // Price in USD
-    const MEMBERSHIP_PRICE = 4.99;
-
-    // Duration of a membership
-    const MEMBERSHIP_DURATION = YEAR_IN_SECONDS; // = 1 year
-
-    /**
-      * PayPal config
-      */
-
-    // toggle on/off sandbox mode
-    const PAYPAL_SANDBOX_MODE = false;
-
-    // paypal btn ID
-    const PAYPAL_HOSTED_BUTTON_ID = '94U2XNW32HCPL';
-
-    // paypal unsubscribe alias (from the unsubscribe button)
-    const PAYPAL_UNSUBSCRIBE_ALIAS = 'SDTL5ZKSX3NHQ';
-
-    // this requires no modification
-    const PAYPAL_UNSUBSCRIBE_LINK = 'https://www' . (
-        Config::PAYPAL_SANDBOX_MODE ? '.sandbox' : ''
-    ) . '.paypal.com/cgi-bin/webscr?cmd=_subscr-find&alias=' . Config::PAYPAL_UNSUBSCRIBE_ALIAS;
-
-    // isolate the app while receiving IPN threads
-    const PAYPAL_PLAN_ID = 'paypal-recurring-payments';
-
-    /**
       * Mail settings
       */
 
@@ -86,7 +55,6 @@ final class Config
     const MAIL_FROM_NAME = Config::SITE_NAME;
     const MAIL_REPLY_TO_EMAIL = Config::MAIL_FROM_EMAIL;
     const MAIL_REPLY_TO_NAME = Config::SITE_NAME;
-
     
     /**
       * Leave these untouched
