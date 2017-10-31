@@ -20,18 +20,20 @@ class Routes
                 if ( $ctrl->isAbstract() ) { continue; }
                 $ctrl = $ctrl->newInstanceWithoutConstructor();
 
-                switch ( true ) {
-                    case !isset($ctrl::$route) || empty($ctrl::$route):
-                        continue 2;
-                        break;
+                if ( !isset($ctrl::$route) || empty($ctrl::$route) ) {
+                    continue;
+                }
 
-                    case method_exists($ctrl, 'get'):
-                        $r->addRoute(['GET','POST'], $ctrl::$route, array( $ctrl, 'get' ));
-                        break;
+                if ( method_exists($ctrl, 'request') ) {
+                    $r->addRoute(['GET','POST'], $ctrl::$route, array( $ctrl, 'request' ));
+                } else {
+                    if ( method_exists($ctrl, 'get') ) {
+                        $r->addRoute(['GET'], $ctrl::$route, array( $ctrl, 'get' ));
+                    }
 
-                    case method_exists($ctrl, 'post'):
-                        $r->addRoute(['GET','POST'], $ctrl::$route, array( $ctrl, 'post' ));
-                        break;
+                    if ( method_exists($ctrl, 'post') ) {
+                        $r->addRoute(['POST'], $ctrl::$route, array( $ctrl, 'post' ));
+                    }
                 }
             }
         }
@@ -66,22 +68,6 @@ class Routes
                 http_response_code(200);
                 $handler = $routeInfo[1];
                 $vars = $routeInfo[2];
-                if ( 'POST' === $httpMethod ) {
-                    if ( method_exists($handler[0], 'post') ) {
-                        $handler[1] = 'post';
-                    } else if ( !isset($handler[0]::$allowPost) || !$handler[0]::$allowPost ) {
-                        return self::Err405();
-                    }
-                } else if ( 'GET' === $httpMethod ) {
-                    if ( method_exists($handler[0], 'get') ) {
-                        $handler[1] = 'get';
-                    } else if ( !isset($handler[0]::$allowPost) || !$handler[0]::$allowPost ) {
-                        return self::Err405();
-                    }
-                } else {
-                    return self::Err405();
-                }
-
                 View::setController($handler[0]);
                 return call_user_func($handler, $vars);
                 break;

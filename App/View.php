@@ -13,10 +13,10 @@ class View
         extract((array) $args);
         self::$content = $content;
 
-        return self::status()->render();
+        return self::render();
     }
 
-    public static function file($file, $args=null)
+    public static function file($file, $args=null, $ret=null)
     {
         ob_start();
         extract((array) $args);
@@ -32,7 +32,7 @@ class View
 
         self::$content = ob_get_clean();
 
-        return self::status()->render();
+        return $ret ? true : self::render();
     }
 
     public static function setTitle($title)
@@ -51,38 +51,32 @@ class View
     {
         self::prepare();
 
-        echo '<!DOCTYPE html>', PHP_EOL;
-        echo '<html>', PHP_EOL;
-        echo '<head>', PHP_EOL;
-        echo '  <meta charset="utf-8" />', PHP_EOL;
-        echo '  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />', PHP_EOL;
-        echo '  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />', PHP_EOL;
-        echo '  <meta name="viewport" content="width=device-width, initial-scale=1.0" />', PHP_EOL;
-        echo '  <title>', self::$title ,'</title>', PHP_EOL;
-        echo '  <link rel="icon" type="image/x-icon" href="', SITE_URL, '/favicon.ico">', PHP_EOL;
+        $head = $footer = null;
 
         if ( self::$controller && is_object(self::$controller) ) {
             if ( method_exists(self::$controller, 'head') ) {
+                ob_start();
                 call_user_func(array( self::$controller, 'head' ));
+                $head = ob_get_clean();
             }
         }
-
-        echo '</head>', PHP_EOL;
-        echo '<body>', PHP_EOL;
-        echo '  <div id="contain">', PHP_EOL;
-        echo '    <div class="subco">', PHP_EOL;
-        echo self::$content;
-        echo '    </div>', PHP_EOL;
-        echo '  </div>', PHP_EOL;
 
         if ( self::$controller && is_object(self::$controller) ) {
             if ( method_exists(self::$controller, 'footer') ) {
+                ob_start();
                 call_user_func(array( self::$controller, 'footer' ));
+                $footer = ob_get_clean();
             }
         }
 
-        echo '</body>', PHP_EOL;
-        echo '</html>', PHP_EOL;
+        self::status()->file('template', array(
+            'title' => self::$title,
+            'content' => self::$content,
+            'head' => $head,
+            'footer' => $footer,
+        ), true);
+
+        echo ( self::$content ), PHP_EOL;
     }
 
     public static function instance()
@@ -107,9 +101,11 @@ class View
         return self::instance();
     }
 
-    static function url($after=null)
+    static function url($after=null, $relative=null)
     {
-        return SITE_URL . ($after ? '/' . preg_replace( '/^\//i', '', $after ) : '');
+        return ($relative ? rtrim(cfg('SITE_PATH', COOKIE_PATH), '/') : SITE_URL) . (
+            $after ? '/' . preg_replace( '/^\//i', '', $after ) : ''
+        );
     }
 
     static function setRouteUri($uri)

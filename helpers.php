@@ -570,8 +570,8 @@ function redirect($to, $args=null) {
     return View::redirect($to, $args);
 }
 
-function url($after=null) {
-    return View::url($after);
+function url($after=null, $relative=null) {
+    return View::url($after, $relative);
 }
 
 function print_field_errors(Errors $errors, $code, $not_codes=null) {
