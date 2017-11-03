@@ -157,10 +157,11 @@ class View
         }
 
         $data = isset($args['data']) && $args['data'] ? (array) $args['data'] : [];
+        $cpath = isset($args['cookie_path']) ? $args['cookie_path'] : null;
 
         if ( $data ) {
             foreach ( $data as $k=>$v ) {
-                Cookie::set("_rdr_{$k}", $v, Errors::COOKIE_LIFESPAN);
+                Cookie::set("_rdr_{$k}", $v, Errors::COOKIE_LIFESPAN, $cpath, true);
             }
         }
 

@@ -26,11 +26,14 @@ maybe_define( 'YEAR_IN_SECONDS', 365 * DAY_IN_SECONDS );
 maybe_define( 'APP_DIR', ROOT_DIR . '/App' );
 
 // site URL
-maybe_define( 'SITE_URL', dirname("{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['HTTP_HOST']}{$_SERVER['PHP_SELF']}") );
+$scheme = isset($_SERVER['REQUEST_SCHEME']) ? $_SERVER['REQUEST_SCHEME'] : 'http' . (
+    isset($_SERVER['HTTPS']) && 'on' == strtolower($_SERVER['HTTPS']) ? 's' : ''
+);
+maybe_define( 'SITE_URL', dirname("{$scheme}://{$_SERVER['HTTP_HOST']}{$_SERVER['PHP_SELF']}") );
 
 // some important constants: cookies.
 $url_parts = parse_url(SITE_URL);
-maybe_define( 'DOMAIN', $url_parts['host'] );
+maybe_define( 'DOMAIN', isset($url_parts['host']) ? $url_parts['host'] : $_SERVER['HTTP_HOST'] );
 maybe_define( 'PROTOCOL', isset($url_parts['scheme']) ? "{$url_parts['scheme']}://" : 'http://' );
 maybe_define( 'COOKIE_PATH', rtrim(!empty($url_parts['path']) ? $url_parts['path'] : '/', '/') . '/' );
 
