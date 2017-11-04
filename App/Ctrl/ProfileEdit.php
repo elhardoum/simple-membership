@@ -34,9 +34,9 @@ class ProfileEdit extends Ctrl
         $err = self::getErrors();
         Auth::protect($err, self::url(null, true));
 
-        $data = array_combine(array('name','email','nonce'), array_map('old', array('name','email','nonce')));
+        $data = array_combine(array('name','email'), array_map('old', array('name','email')));
 
-        if ( !Nonce::verify( $data['nonce'], 'edit-profile' ) ) {
+        if ( !Nonce::verify( old('nonce'), 'edit-profile' ) ) {
             bad_auth($err);
         } else if ( self::user()->update($data, $err) ) {
             $err->addError('Profile updated successfully!', 'success');

@@ -151,7 +151,7 @@ class Errors
         }
 
         if ( $groups ) {
-            Cookie::set($cookieKey, $groups, self::COOKIE_LIFESPAN);
+            Cookie::set($cookieKey, @json_encode($groups), self::COOKIE_LIFESPAN);
         }
 
         return $this;
@@ -159,7 +159,7 @@ class Errors
 
     public function import($cookieKey='errors')
     {
-        $errors = Cookie::get($cookieKey);
+        $errors = @json_decode( decode_str( Cookie::get($cookieKey) ), 1 );
         Cookie::delete($cookieKey);
 
         if ( $errors && is_array($errors) ) {

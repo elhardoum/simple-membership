@@ -40,7 +40,7 @@ class User
         }
 
         foreach ( $data as $k=>$v ) {
-            if ( $v === self::$user->$k ) {
+            if ( !isset(self::$user->$k) || $v === self::$user->$k ) {
                 unset($data[$k]);
             } else {
                 switch ( $k ) {

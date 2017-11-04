@@ -8,7 +8,7 @@ class Cookie
 
     static function set($name=null, $value=null, $expires=null, $path=null, $httponly=null)
     {
-        $value = maybe_serialize($value);
+        $value = esc_attr($value);
         $expires = $expires ? (time() + $expires) : '';
         $path = $path && trim($path) ? $path : COOKIE_PATH;
         setcookie(
@@ -27,7 +27,7 @@ class Cookie
     {
         $cookie = isset($_COOKIE[$name]) ? $_COOKIE[$name] : null;  
         if ( $cookie ) {
-            $cookie = maybe_unserialize($cookie);
+            $cookie = esc_attr($cookie);
         }
         return $cookie;
     }

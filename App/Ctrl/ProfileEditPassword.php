@@ -26,9 +26,9 @@ class ProfileEditPassword extends Ctrl
         $err = self::getErrors();
         Auth::protect($err, self::url(null, true));
 
-        $data = array_combine(array('nonce','old_pass','pass','pass_conf'), array_map('old', array('nonce','old_pass','pass','pass_conf')));
+        $data = array_combine(array('old_pass','pass','pass_conf'), array_map('old', array('old_pass','pass','pass_conf')));
 
-        if ( !Nonce::verify( $data['nonce'], 'edit-password' ) ) {
+        if ( !Nonce::verify( old('nonce'), 'edit-password' ) ) {
             bad_auth($err);
         } else {
             switch ( true ) {
