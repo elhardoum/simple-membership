@@ -59,7 +59,7 @@ class ProfileEditPassword extends Ctrl
                 default:
                     if ( self::user()->update(array('password' => $data['pass_conf']), $err) ) {
                         if ( $tokens = Auth::getUserTokens( self::user()->get()->id ) ) {
-                            if ( count($tokens) > 1||1 ) {
+                            if ( count($tokens) > 1 ) {
                                 if ( $token = Auth::getCurrentToken() ) {
                                     $tokens = isset($tokens[$token]) ? array( $token => $tokens[$token] ) : array();
                                     Auth::setUserTokens( self::user()->get()->id, $tokens );
